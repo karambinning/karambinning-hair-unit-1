@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hair @ Unit 1 — Hastings Street, Luton</title>
+<meta name="description" content="An independent hair salon on Hastings Street in Luton town centre. Cuts, finishes, blow-dries and highlights." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&display=swap" />
+
+<style>
+  :root{
+    --paper:      #EFE9DD;
+    --paper-2:    #E6DECD;
+    --ink:        #161410;
+    --ink-soft:   #3B342B;
+    --smoke:      #9B9590;
+    --copper:     #B45A2A;
+    --copper-low: #9A4A21;
+
+    --display: "Instrument Serif", "Cormorant Garamond", "Times New Roman", serif;
+    --mono:    "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --rhythm: clamp(0.95rem, 0.65rem + 0.6vw, 1.05rem);
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: var(--rhythm);
+    line-height: 1.5;
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+  }
+
+  /* grain — inline SVG, 4% — kills the flat-AI surface */
+  body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9;
+    opacity: .07;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.06  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--copper); color: var(--paper); }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; }
+  h1, h2 { text-wrap: balance; letter-spacing: -0.01em; }
+  p  { text-wrap: pretty; margin: 0 0 1em 0; max-width: 60ch; }
+
+  .label{
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .label--copper{ color: var(--copper-low); }
+
+  /* ---------- top bar ---------- */
+  .bar{
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--gutter);
+    align-items: baseline;
+    padding: 1.25rem var(--gutter) 0;
+    font-family: var(--mono);
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .bar__mark{
+    display: inline-flex; gap: .55rem; align-items: baseline;
+    color: var(--ink);
+  }
+  .bar__dot{
+    display:inline-block; width:.5rem; height:.5rem; border-radius:999px;
+    background: var(--copper);
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--copper) 20%, transparent);
+  }
+  .bar__meta{ text-align:right; color: var(--ink-soft); }
+
+  /* ---------- masthead ---------- */
+  .stage{
+    position: relative;
+    padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) clamp(2rem, 6vw, 4.5rem);
+    min-height: 92vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+
+  .plate{
+    align-self: end;
+  }
+  .plate__kicker{
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: clamp(.5rem, 1.5vw, 1rem);
+    color: var(--ink-soft);
+  }
+  .plate__kicker .rule{
+    flex: 1 1 auto;
+    height: 1px; background: currentColor; opacity: .35;
+    transform: translateY(-.35em);
+  }
+
+  .display{
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(5rem, 22vw, 19rem);
+    line-height: .82;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .display .amp{
+    font-style: normal;
+    font-family: var(--display);
+    color: var(--copper);
+    padding: 0 .04em;
+  }
+  .display .unit{
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: .18em;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    vertical-align: .9em;
+    margin-left: .25em;
+    padding: .25em .55em;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .plate__sub{
+    margin-top: clamp(.75rem, 2vw, 1.4rem);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem;
+    max-width: 38rem;
+  }
+  .plate__line{
+    font-family: var(--mono);
+    font-size: clamp(.88rem, 1.1vw, 1rem);
+    color: var(--ink-soft);
+    letter-spacing: .02em;
+  }
+
+  .stage__foot{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--gutter);
+    margin-top: clamp(2rem, 6vw, 4rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+  }
+  .stage__lede{
+    font-family: var(--display);
+    font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+    line-height: 1.25;
+    max-width: 28ch;
+    color: var(--ink);
+  }
+  .stage__lede em { font-style: italic; color: var(--copper-low); }
+
+  .stamp{
+    font-family: var(--mono);
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: .5rem .8rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    align-self: end;
+  }
+
+  /* ---------- services ---------- */
+  .ledger{
+    position: relative;
+    padding: clamp(3rem, 8vw, 6rem) var(--gutter);
+    background:
+      linear-gradient(to bottom, var(--paper) 0, var(--paper) 100%);
+    border-top: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+  }
+  .ledger__head{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem;
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+  }
+  .ledger__head h2{
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-style: italic;
+    line-height: 1;
+  }
+  .ledger__head .note{
+    font-family: var(--mono);
+    font-size: .85rem;
+    color: var(--ink-soft);
+    max-width: 38ch;
+  }
+
+  .list{
+    list-style: none;
+    margin: 0; padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 2vw, 1.4rem);
+  }
+  .row{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: baseline;
+    padding: 0 0 clamp(1rem, 2vw, 1.4rem);
+    border-bottom: 1px dashed color-mix(in oklab, var(--ink) 25%, transparent);
+  }
+  .row:last-child { border-bottom: none; }
+  .row__num{
+    font-family: var(--mono);
+    font-size: .8rem;
+    letter-spacing: .12em;
+    color: var(--copper-low);
+    padding-top: .35rem;
+  }
+  .row__body h3{
+    font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+    font-style: italic;
+    line-height: 1;
+    margin-bottom: .35rem;
+  }
+  .row__body p{
+    font-family: var(--mono);
+    font-size: .9rem;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 54ch;
+  }
+
+  /* scroll reveal — pure CSS, no JS */
+  @supports (animation-timeline: view()) {
+    .row{
+      animation: rise both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 25%;
+    }
+    @keyframes rise{
+      from { opacity: 0; transform: translateY(1.4rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  /* ---------- where ---------- */
+  .where{
+    padding: clamp(3rem, 8vw, 6rem) var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .where__plate{
+    border: 1px solid var(--ink);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    background: var(--paper-2);
+    display: grid;
+    gap: 1rem;
+    position: relative;
+  }
+  .where__plate::before{
+    content: "";
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; height: 6px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ink) 0 6px,
+      transparent 6px 12px
+    );
+  }
+  .where__plate h2{
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-style: italic;
+    line-height: 1;
+  }
+  .where__addr{
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .where__addr a{
+    border-bottom: 1px solid color-mix(in oklab, var(--ink) 30%, transparent);
+    transition: border-color .2s, color .2s;
+  }
+  .where__addr a:hover{
+    color: var(--copper);
+    border-color: var(--copper);
+  }
+  .where__note{
+    font-family: var(--mono);
+    font-size: .92rem;
+    color: var(--ink-soft);
+    max-width: 48ch;
+  }
+  .where__pip{
+    font-family: var(--mono);
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--copper-low);
+  }
+
+  /* ---------- footer ---------- */
+  .foot{
+    padding: clamp(2rem, 5vw, 3.5rem) var(--gutter);
+    border-top: 1px solid color-mix(in oklab, var(--ink) 15%, transparent);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: end;
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--ink-soft);
+    letter-spacing: .04em;
+  }
+  .foot__postcode{
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(2.8rem, 9vw, 5.5rem);
+    line-height: .9;
+    color: var(--ink);
+  }
+
+  /* ---------- breakpoints ---------- */
+  @media (min-width: 50rem){
+    .stage__foot{ grid-template-columns: 1fr auto; }
+    .where{ grid-template-columns: 1.1fr .9fr; align-items: start; }
+    .list{ grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2vw, 2rem) clamp(2rem, 4vw, 3rem); }
+    .row{ border-bottom: 1px dashed color-mix(in oklab, var(--ink) 25%, transparent); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .row{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <span class="bar__mark">
+    <span class="bar__dot" aria-hidden="true"></span>
+    Hair @ Unit 1
+  </span>
+  <span aria-hidden="true"></span>
+  <span class="bar__meta">Hastings Street · Luton</span>
+</header>
+
+<section class="stage">
+  <div></div>
+
+  <div class="plate">
+    <div class="plate__kicker">
+      <span class="label">Independent salon · est. Luton town centre</span>
+      <span class="rule" aria-hidden="true"></span>
+      <span class="label label--copper">LU1 5BE</span>
+    </div>
+
+    <h1 class="display">
+      Hair<span class="amp">.</span><br>
+      <span class="unit">@ Unit 1</span>
+    </h1>
+
+    <div class="plate__sub">
+      <div class="plate__line">Cuts. Finishes. Blow-dries. Highlights.</div>
+      <div class="plate__line">No frills. Walk in, or pop by to book.</div>
+    </div>
+
+    <div class="stage__foot">
+      <p class="stage__lede">
+        A working salon in a working town —
+        <em>named after the unit it sits in.</em>
+        That's the whole story.
+      </p>
+      <a class="stamp" href="#where">Find&nbsp;us&nbsp;↓</a>
+    </div>
+  </div>
+</section>
+
+<section class="ledger" id="services">
+  <div class="ledger__head">
+    <span class="label">Section ii · what we do</span>
+    <h2>The service list.</h2>
+    <p class="note">A short menu, set plainly. Prices on the day — they depend on length, time, and what you're after.</p>
+  </div>
+
+  <ol class="list">
+    <li class="row">
+      <span class="row__num">01</span>
+      <div class="row__body">
+        <h3>Cuts.</h3>
+        <p>Restyle, trim, fringe, shape-up. Whatever you walked in for, we'll talk it through first.</p>
+      </div>
+    </li>
+    <li class="row">
+      <span class="row__num">02</span>
+      <div class="row__body">
+        <h3>Finishes.</h3>
+        <p>The bit that takes a cut from "done" to "out the door". Set, dressed, ready for the rest of the day.</p>
+      </div>
+    </li>
+    <li class="row">
+      <span class="row__num">03</span>
+      <div class="row__body">
+        <h3>Blow-dries.</h3>
+        <p>Wash and blow, smooth or bouncy. Good for an event or just because it's Friday.</p>
+      </div>
+    </li>
+    <li class="row">
+      <span class="row__num">04</span>
+      <div class="row__body">
+        <h3>Highlights.</h3>
+        <p>Foils, balayage, a few face-framing pieces. We'll keep it close to your natural where it matters.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section class="where" id="where">
+  <div class="where__plate">
+    <span class="where__pip">↘ Where we are</span>
+    <h2>Hastings Street.</h2>
+    <address class="where__addr" style="font-style: normal;">
+      <a href="https://maps.google.com/?q=Hair+%40+Unit+1%2C+11+Hastings+Street%2C+Luton+LU1+5BE" target="_blank" rel="noopener">
+        11 Hastings Street<br>
+        Luton, Bedfordshire<br>
+        LU1 5BE
+      </a>
+    </address>
+    <p class="where__note">Town centre. Two minutes from the Mall, off Park Street West. The unit number is on the door — it's the one labelled "1".</p>
+  </div>
+
+  <div class="where__plate">
+    <span class="where__pip">↘ Opening</span>
+    <h2>Just turn up.</h2>
+    <p class="where__note">We keep walk-in slots most days. Hours aren't pinned down here — they shift with the season and the diary. The simplest thing: pop in and ask. If we're booked we'll write you in.</p>
+    <span class="label">Independent · cash &amp; card · Luton</span>
+  </div>
+</section>
+
+<footer class="foot">
+  <div>
+    <div>© Hair @ Unit 1 · 11 Hastings Street · Luton</div>
+    <div style="margin-top:.4rem;">Independent salon. Quietly running on Hastings Street.</div>
+  </div>
+  <div class="foot__postcode" aria-hidden="true">LU1&nbsp;5BE</div>
+</footer>
+
+</body>
+</html>
